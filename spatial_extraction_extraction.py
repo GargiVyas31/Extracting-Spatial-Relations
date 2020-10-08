@@ -40,14 +40,13 @@ def dfs(visited, graph, node):
 
 def specialcase1(string):
     global landmark, prep, trajector
-    print("Special case")
 
     for t in nlp(string):
         if t.dep_ is "nsubj" or t.dep_ is "attr" or t.dep_ is "nsubjpass":
             trajector.append(t.text)
         if t.dep_ is "pobj":
             landmark.append(t.text)
-    print("check",landmark[0])
+   
     prep = landmark[0]
     landmark = landmark[-1]
     with open('Spatial_Relation_test.txt', 'a', newline='') as file:
@@ -68,7 +67,7 @@ def first_call(string):
     if "left" in string or "right" in string or "front" in string or "behind" in string:
         specialcase1(string)
     else:
-        print("HERE")
+       
         graph = nlp(string)
         for t in range(len(graph)):
             if graph[t].dep_ ==  "ROOT" :
@@ -91,7 +90,6 @@ def start(doc):
 
     sentences = str(doc).split(". ")
 
-    print("Sentences",sentences)
     for string in sentences:
         if "and" in string:
             parts = string.split("and")
@@ -113,7 +111,7 @@ def start(doc):
                         print("S",sentence)
                         first_call(sentence)
                     else:
-                        print("some other verb detected")
+                        print("Some other verb detected!")
 
         else:
             first_call(string)
@@ -140,5 +138,5 @@ for i in noun_extracted:
         ni=j+" "+d[sid]
     noun_id.write(ni)
     noun_id.write("\n")
-print(ids)
+
 start(nlp("A book and a bat are placed to the left of the desk. A hat is on the chair and it is under the desk."))
